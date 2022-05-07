@@ -1,6 +1,7 @@
 package program;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -35,21 +36,29 @@ public class main {
 		
 		System.out.print("\nEnter employee ID that will have salary increase: ");
 		int id = sc.nextInt();
-
-		for(Employee x : list) {
-			if(x.getId() == id) {
-				System.out.print("Enter the percentage: ");
-				double percentage = sc.nextDouble();
-				double valorAposAumento = x.getSalary() * (percentage/100);
-				x.increaseSalary(valorAposAumento);
-			}
+		Integer pos = position(list, id);
+		
+		if(pos != null) {
+			System.out.print("Enter the percentage: ");
+			double percentage = sc.nextDouble();
+			list.get(id).increaseSalary(percentage);
+		}else {
+			System.out.println("\nThis ID does not exist!");
 		}
 		
 		System.out.println("\nList of employees: ");
 		for(int i=0; i < list.size(); i++) {
-			System.out.println(list.get(i).getId() + ", " + list.get(i).getName() + ", " + list.get(i).getSalary());
+			System.out.println(list.get(i).getId() + ", " + list.get(i).getName() + ", " + String.format("%.2f", list.get(i).getSalary()));
 		}
 		sc.close();
+	}
+	public static Integer position(List<Employee> list, int id) {
+		for(int i = 0; i < list.size(); i++) {
+			if (list.get(i).getId() == id) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 }
