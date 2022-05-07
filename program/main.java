@@ -1,10 +1,8 @@
 package program;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import entities.Employee;
 
@@ -18,8 +16,8 @@ public class main {
 		System.out.print("How many employees will be registered? ");
 		int quantidadeDeFuncionarios = sc.nextInt();
 		
-		Employee[] employee = new Employee[quantidadeDeFuncionarios];
-		List<Employee> list = new ArrayList<>();
+		Employee employee;
+		ArrayList<Employee> list = new ArrayList<Employee>();
 		
 		for(int i=0; i < quantidadeDeFuncionarios; i++) {
 			System.out.println("\nEmployee #" + (i+1) + ":");
@@ -31,22 +29,26 @@ public class main {
 			System.out.print("Salary: ");
 			double salary = sc.nextDouble();
 			
-			employee[id] = new Employee(id, name, salary);
-			list.add(id, employee[id]);
+			employee = new Employee(id, name, salary);
+			list.add(i, employee);
 		}
 		
-		System.out.print("Enter employee ID that will have salary increase: ");
+		System.out.print("\nEnter employee ID that will have salary increase: ");
 		int id = sc.nextInt();
-		System.out.println("Enter the percentage: ");
-		double percentage = sc.nextDouble();
-		double valorAposAumento = employee[id].getSalary() * (percentage/100);
+
+		for(Employee x : list) {
+			if(x.getId() == id) {
+				System.out.print("Enter the percentage: ");
+				double percentage = sc.nextDouble();
+				double valorAposAumento = x.getSalary() * (percentage/100);
+				x.increaseSalary(valorAposAumento);
+			}
+		}
 		
-		employee[id].increaseSalary(valorAposAumento);
-		
-		list.removeIf(x -> x.getId() == id);
-		list.add(id, employee[id]);
-		
-		System.out.println("");
+		System.out.println("\nList of employees: ");
+		for(int i=0; i < list.size(); i++) {
+			System.out.println(list.get(i).getId() + ", " + list.get(i).getName() + ", " + list.get(i).getSalary());
+		}
 		sc.close();
 	}
 

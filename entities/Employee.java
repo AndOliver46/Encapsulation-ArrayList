@@ -7,6 +7,9 @@ public class Employee {
 	private double salary;
 	
 	//Constructors
+	public Employee() {
+		super();
+	}
 	public Employee(int id, String name, double salary) {
 		this.id = id;
 		this.name = name;
